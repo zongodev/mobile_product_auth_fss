@@ -8,4 +8,10 @@ class AuthService {
   Future<void> signInUser (String email , String password) async{
     await fbAuth.signInWithEmailAndPassword(email: email, password: password);
   }
+  Future<void> logOut() async{
+    await fbAuth.signOut();
+  }
+  Future<void> resetPass(String email) async {
+    await fbAuth.sendPasswordResetEmail(email: email);
+  }
 }

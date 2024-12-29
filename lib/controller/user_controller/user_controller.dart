@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -16,12 +17,30 @@ class UserController extends GetxController {
   final Rx<TextEditingController> password = TextEditingController().obs;
   final UserService userService = UserService();
   final AuthService authService = AuthService();
+  final Stream<User?> userStream = FirebaseAuth.instance.authStateChanges();
+  Rx<User?> authUser = Rx<User?>(null);
+  final TextEditingController resetController = TextEditingController();
+
+
+  @override
+  void onInit() {
+    super.onInit();
+    userStream.listen((user) {
+      authUser.value = user;
+      if (user != null) {
+        Get.offAllNamed(AppRoutes.qrScan);
+        log(user.email.toString());
+      } else {
+        Get.offAllNamed(AppRoutes.register);
+      }
+    });
+  }
 
   Future<void> addUser() async {
     try {
       UserModel user =
           UserModel(fullName: fullName.value.text, email: email.value.text);
-      await userService.addUser(user);
+      await userService.addUser(user, authUser.value!.uid);
     } catch (e) {
       log(e.toString());
     }
@@ -33,8 +52,8 @@ class UserController extends GetxController {
           .createUser(email.value.text, password.value.text)
           .then((_) async => await addUser().then((_) {
                 clearFields();
-                Get.offNamed(AppRoutes.qrScan);
-                 EasyLoading.dismiss();
+                Get.offAllNamed(AppRoutes.qrScan);
+                EasyLoading.dismiss();
                 EasyLoading.showSuccess("Account created !");
               }));
     } catch (e) {
@@ -60,7 +79,7 @@ class UserController extends GetxController {
           .then((_) async {
         {
           clearFields();
-          Get.offNamed(AppRoutes.qrScan);
+          Get.offAllNamed(AppRoutes.qrScan);
           return EasyLoading.dismiss();
         }
       });
@@ -79,6 +98,58 @@ class UserController extends GetxController {
           colorText: Colors.white);
     }
   }
+
+  Future<void> logOut() async {
+    try {
+      await authService.logOut().then((value) {
+        Get.snackbar(
+          "Logout Successful",
+          "You have been successfully logged out.",
+          backgroundColor: Colors.green,
+          snackPosition: SnackPosition.BOTTOM,
+        );
+        Get.offAllNamed(AppRoutes.login);
+      });
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+  Future<void> resetPass(String email) async {
+    try {
+
+      await authService.resetPass(email).then((value) {
+        resetController.clear();
+        Get.back();
+        return Get.snackbar("Success", "A password reset link has been sent to your email. Please check your inbox.",
+            snackPosition: SnackPosition.BOTTOM,
+            duration: const Duration(seconds: 7),
+            icon: const Icon(
+              Icons.check,
+              color: Colors.white,
+              size: 40,
+            ),
+            maxWidth: 500,
+            margin: const EdgeInsets.only(bottom: 10),
+            backgroundColor: Colors.green,
+            colorText: Colors.white);
+      },);
+
+    } on FirebaseAuthException catch (e) {
+      Get.snackbar("Error", e.toString(),
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 7),
+          icon: const Icon(
+            Icons.error_outline,
+            color: Colors.white,
+            size: 40,
+          ),
+          maxWidth: 500,
+          margin: const EdgeInsets.only(bottom: 10),
+          backgroundColor: const Color(0xffE6284A),
+          colorText: Colors.white);
+    }
+  }
+
 
   clearFields() {
     fullName.value.clear();

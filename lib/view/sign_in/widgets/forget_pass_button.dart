@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:product_auth_fss/routes/app_routes.dart';
 
 import '../../../consts/app_style.dart';
 class ForgetPassButton extends StatelessWidget {
@@ -11,7 +13,9 @@ class ForgetPassButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 8.0,bottom: 16),
       child: InkWell(
-        onTap: (){},
+        onTap: (){
+          Get.toNamed(AppRoutes.resetpass);
+        },
         child: const Text("Forget password ?",style: AppStyle.specificCaseStyle,),
       ),
     );

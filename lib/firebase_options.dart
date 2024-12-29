@@ -50,20 +50,20 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDP9tiQGqaedPpqeyROhKxc8tQTx8ULUfQ',
-    appId: '1:829319450474:android:754a505664fcccc1269f13',
-    messagingSenderId: '829319450474',
-    projectId: 'productauthenticity-4ac6b',
-    storageBucket: 'productauthenticity-4ac6b.appspot.com',
+    apiKey: 'AIzaSyA3DRzOxfdqZNu0iMwLd9cOd8fRXEtfO2I',
+    appId: '1:701556771654:android:ab8fa6934e21fd5c897347',
+    messagingSenderId: '701556771654',
+    projectId: 'productauth-67c25',
+    storageBucket: 'productauth-67c25.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAT8kSZD37kG5vCePqKm8OAjjn4hm0A80Y',
-    appId: '1:829319450474:ios:ec347c28ef0feadd269f13',
-    messagingSenderId: '829319450474',
-    projectId: 'productauthenticity-4ac6b',
-    storageBucket: 'productauthenticity-4ac6b.appspot.com',
-    iosClientId: '829319450474-og5iveljudrtmqvn8i28l0e1o2ujgukb.apps.googleusercontent.com',
+    apiKey: 'AIzaSyBGAWkWiAZtHYbO2ChOwOChAI2lKJTSbMA',
+    appId: '1:701556771654:ios:106cc585234b63f5897347',
+    messagingSenderId: '701556771654',
+    projectId: 'productauth-67c25',
+    storageBucket: 'productauth-67c25.appspot.com',
     iosBundleId: 'com.example.productAuthFss',
   );
+
 }

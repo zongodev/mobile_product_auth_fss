@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:lottie/lottie.dart';
+import 'package:product_auth_fss/consts/colors.dart';
 
 import '../consts/app_assets.dart';
 import '../consts/app_style.dart';
@@ -16,7 +18,8 @@ final String title;
       child: Stack(
         alignment: Alignment.center,
         children: [
-          SvgPicture.asset(AppAssets.signInUp,width: 321,),
+          title=="Welcome back"?
+          Lottie.asset(AppAssets.signIn):Lottie.asset(AppAssets.signUp2),
            Align(
             alignment: Alignment.bottomCenter,
             child: Text(title, style: AppStyle.h1Style,),

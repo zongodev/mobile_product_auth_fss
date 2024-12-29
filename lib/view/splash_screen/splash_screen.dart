@@ -4,6 +4,8 @@ import 'package:lottie/lottie.dart';
 import 'package:product_auth_fss/consts/app_assets.dart';
 import 'package:product_auth_fss/view/sign_up/register.dart';
 
+import '../onboardingscreen/onboarding_screen.dart';
+
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
 
@@ -12,7 +14,7 @@ class SplashScreen extends StatelessWidget {
     return AnimatedSplashScreen(
       curve: Curves.bounceIn,
       splash: LottieBuilder.asset(AppAssets.splashIcon),
-      nextScreen: const Register(),
+      nextScreen: const OnBoardingPage(),
      splashIconSize: 400,
       animationDuration: const Duration(seconds: 5),
       backgroundColor: const Color(0xff22292f),
